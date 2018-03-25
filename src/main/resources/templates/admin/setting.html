@@ -149,7 +149,7 @@
     function saveSetting() {
         var param = $('#global-form').serialize();
         tale.post({
-            url : '/admin/setting',
+            url : '/administrator/setting',
             data: param,
             success: function (result) {
                 if(result && result.success){
@@ -167,7 +167,7 @@
     function saveIndiviSetting() {
         var param = $('#indivi-form').serialize();
         tale.post({
-            url : '/admin/setting',
+            url : '/administrator/setting',
             data: param,
             success: function (result) {
                 if(result && result.success){
@@ -203,7 +203,7 @@
             bk_path: $('#backup_dir').val()
         };
         tale.post({
-            url : '/admin/setting/backup',
+            url : '/administrator/setting/backup',
             data: param,
             success: function (result) {
                 if(result && result.success){

@@ -20,7 +20,7 @@ import java.util.List;
  * Created by 13 on 2017/2/21.
  */
 @Controller
-@RequestMapping("admin/links")
+@RequestMapping("administrator/links")
 public class LinksController extends BaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(LinksController.class);

@@ -35,7 +35,7 @@ import java.util.List;
  * Created by 13 on 2017/2/21.
  */
 @Controller
-@RequestMapping("admin/attach")
+@RequestMapping("administrator/attach")
 public class AttachController extends BaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AttachController.class);

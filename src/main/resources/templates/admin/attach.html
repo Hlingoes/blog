@@ -151,7 +151,7 @@
             title: '确定删除该附件吗?',
             then: function () {
                 tale.post({
-                    url: '/admin/attach/delete',
+                    url : '/administrator/attach/delete',
                     data: {id: id},
                     success: function (result) {
                         if (result && result.success) {

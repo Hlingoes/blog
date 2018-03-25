@@ -21,7 +21,7 @@ import java.util.List;
  * Created by 13 on 2017/2/21.
  */
 @Controller
-@RequestMapping("admin/category")
+@RequestMapping("administrator/category")
 public class CategoryController extends BaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CategoryController.class);

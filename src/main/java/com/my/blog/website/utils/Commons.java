@@ -68,7 +68,7 @@ public final class Commons {
      * @return
      */
     public static String site_login() {
-        return "admin/login";
+        return "administrator/login";
     }
 
     /**

@@ -29,7 +29,7 @@ import java.io.IOException;
  * Created by BlueT on 2017/3/11.
  */
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/administrator")
 @Transactional(rollbackFor = TipException.class)
 public class AuthController extends BaseController {
 

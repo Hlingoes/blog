@@ -73,7 +73,7 @@
             $('#content-editor').val($('#text').val());
             $("#articleForm #categories").val($('#multiple-sel').val());
             var params = $("#articleForm").serialize();
-            var url = $('#articleForm #cid').val() != '' ? '/admin/page/modify' : '/admin/page/publish';
+            var url = $('#articleForm #cid').val() != '' ? '/administrator/page/modify' : '/administrator/page/publish';
 
             tale.post({
                 url:url,
@@ -84,7 +84,7 @@
                             text:'页面保存成功',
                             then: function () {
                                 setTimeout(function () {
-                                    window.location.href = '/admin/page';
+                                    window.location.href = '/administrator/page';
                                 }, 500);
                             }
                         });

@@ -99,7 +99,7 @@
         submitHandler: function (form) {
             var params = $("#linkForm").serialize();
             tale.post({
-                url : '/admin/links/save',
+                url : '/administrator/links/save',
                 data: params,
                 success: function (result) {
                     $('#linkForm input').val('');
@@ -135,7 +135,7 @@
             title:'确定删除该链接吗?',
             then: function () {
                 tale.post({
-                    url : '/admin/links/delete',
+                    url : '/administrator/links/delete',
                     data: {mid: mid},
                     success: function (result) {
                         if(result && result.success){

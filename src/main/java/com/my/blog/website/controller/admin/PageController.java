@@ -1,31 +1,37 @@
 package com.my.blog.website.controller.admin;
 
-import com.github.pagehelper.PageInfo;
-import com.my.blog.website.exception.TipException;
-import com.my.blog.website.modal.Bo.RestResponseBo;
-import com.my.blog.website.modal.Vo.UserVo;
-import com.my.blog.website.service.ILogService;
-import com.my.blog.website.constant.WebConst;
-import com.my.blog.website.controller.BaseController;
-import com.my.blog.website.dto.LogActions;
-import com.my.blog.website.dto.Types;
-import com.my.blog.website.modal.Vo.ContentVo;
-import com.my.blog.website.modal.Vo.ContentVoExample;
-import com.my.blog.website.service.IContentService;
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+import com.github.pagehelper.PageInfo;
+import com.my.blog.website.constant.WebConst;
+import com.my.blog.website.controller.BaseController;
+import com.my.blog.website.dto.LogActions;
+import com.my.blog.website.dto.Types;
+import com.my.blog.website.exception.TipException;
+import com.my.blog.website.modal.Bo.RestResponseBo;
+import com.my.blog.website.modal.Vo.ContentVo;
+import com.my.blog.website.modal.Vo.ContentVoExample;
+import com.my.blog.website.modal.Vo.UserVo;
+import com.my.blog.website.service.IContentService;
+import com.my.blog.website.service.ILogService;
 
 /**
  * Created by 13 on 2017/2/21.
  */
-@Controller()
-@RequestMapping("admin/page")
+@Controller
+@RequestMapping("administrator/page")
 public class PageController extends BaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PageController.class);

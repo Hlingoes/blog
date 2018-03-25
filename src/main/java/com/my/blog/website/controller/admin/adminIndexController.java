@@ -38,11 +38,11 @@ import com.my.blog.website.utils.TaleUtils;
  * 后台管理首页
  * Created by Administrator on 2017/3/9 009.
  */
-@Controller("adminIndexController")
-@RequestMapping("/admin")
+@Controller
+@RequestMapping("/administrator")
 @Transactional(rollbackFor = TipException.class)
-public class IndexController extends BaseController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(IndexController.class);
+public class adminIndexController extends BaseController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(adminIndexController.class);
 
     @Resource
     private ISiteService siteService;

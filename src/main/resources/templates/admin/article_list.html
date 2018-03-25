@@ -27,7 +27,7 @@
                             <th:block th:each="post : ${articles.list}">
                                 <tr th:cid="${post.cid}">
                                     <td>
-                                        <a th:href="@{'/admin/article/'+${post.cid}}" th:text="${post.title}"></a>
+                                        <a th:href="@{'/administrator/article/'+${post.cid}}" th:text="${post.title}"></a>
                                     </td>
                                     <td><th:block th:text="${commons.fmtdate(post.created, 'yyyy-MM-dd HH:mm:ss')}"/></td>
                                     <td><th:block th:text="${post.hits}"/></td>
@@ -41,7 +41,7 @@
                                        </th:block>
                                     </td>
                                     <td>
-                                        <a th:href="@{'/admin/article/'+${post.cid}}"
+                                        <a th:href="@{'/administrator/article/'+${post.cid}}"
                                            class="btn btn-primary btn-sm waves-effect waves-light m-b-5"><i
                                                 class="fa fa-edit"></i> <span>编辑</span></a>
                                         <a href="javascript:void(0)" th:onclick="'delPost('+${post.cid}+');'"
@@ -73,7 +73,7 @@
             title:'确定删除该文章吗?',
             then: function () {
                 tale.post({
-                    url : '/admin/article/delete',
+                    url : '/administrator/article/delete',
                     data: {cid: cid},
                     success: function (result) {
                         if(result && result.success){

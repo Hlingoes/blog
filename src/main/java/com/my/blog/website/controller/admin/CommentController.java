@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
  * Created by 13 on 2017/2/26.
  */
 @Controller
-@RequestMapping("admin/comments")
+@RequestMapping("administrator/comments")
 public class CommentController extends BaseController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CommentController.class);
