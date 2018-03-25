@@ -36,7 +36,7 @@
                                         <th:block th:if="${post.status == 'draft'}" th:text="草稿"/>
                                     </td>
                                     <td>
-                                        <a th:href="@{'/admin/page/'+${post.cid}}" class="btn btn-primary btn-sm waves-effect waves-light m-b-5"><i
+                                        <a th:href="@{'/administrator/page/'+${post.cid}}" class="btn btn-primary btn-sm waves-effect waves-light m-b-5"><i
                                                 class="fa fa-edit"></i> <span>编辑</span></a>
                                         <a href="javascript:void(0)" th:onclick="'delPost('+${post.cid}+');'"
                                            class="btn btn-danger btn-sm waves-effect waves-light m-b-5"><i

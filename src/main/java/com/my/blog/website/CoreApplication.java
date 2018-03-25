@@ -1,6 +1,7 @@
 package com.my.blog.website;
 
-import com.alibaba.druid.pool.DruidDataSource;
+import javax.sql.DataSource;
+
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.annotation.MapperScan;
@@ -15,7 +16,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.sql.DataSource;
+import com.alibaba.druid.pool.DruidDataSource;
 
 @MapperScan("com.my.blog.website.dao")
 @SpringBootApplication

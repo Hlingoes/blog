@@ -1,5 +1,26 @@
 package com.my.blog.website.controller;
 
+import java.net.URLEncoder;
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.github.pagehelper.PageInfo;
 import com.my.blog.website.constant.WebConst;
 import com.my.blog.website.dto.ErrorCode;
@@ -7,33 +28,22 @@ import com.my.blog.website.dto.MetaDto;
 import com.my.blog.website.dto.Types;
 import com.my.blog.website.exception.TipException;
 import com.my.blog.website.modal.Bo.ArchiveBo;
+import com.my.blog.website.modal.Bo.CommentBo;
 import com.my.blog.website.modal.Bo.RestResponseBo;
 import com.my.blog.website.modal.Vo.CommentVo;
+import com.my.blog.website.modal.Vo.ContentVo;
 import com.my.blog.website.modal.Vo.MetaVo;
+import com.my.blog.website.service.ICommentService;
+import com.my.blog.website.service.IContentService;
 import com.my.blog.website.service.IMetaService;
 import com.my.blog.website.service.ISiteService;
+import com.my.blog.website.utils.IPKit;
 import com.my.blog.website.utils.PatternKit;
 import com.my.blog.website.utils.TaleUtils;
 import com.vdurmont.emoji.EmojiParser;
-import com.my.blog.website.modal.Bo.CommentBo;
-import com.my.blog.website.modal.Vo.ContentVo;
-import com.my.blog.website.service.ICommentService;
-import com.my.blog.website.service.IContentService;
-import com.my.blog.website.utils.IPKit;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-import java.net.URLEncoder;
-import java.util.List;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * 首页
@@ -91,6 +101,8 @@ public class IndexController extends BaseController {
      * @param cid     文章主键
      * @return
      */
+    @ApiOperation(value="获取文章内容", notes="根据url的cid来获取文章详细信息")
+	@ApiImplicitParam(name = "cid", value = "文章cid", required = true, dataType = "String", paramType = "path")
     @GetMapping(value = {"article/{cid}", "article/{cid}.html"})
     public String getArticle(HttpServletRequest request, @PathVariable String cid) {
         ContentVo contents = contentService.getContents(cid);
@@ -291,9 +303,9 @@ public class IndexController extends BaseController {
     }
 
     /**
-     * 自定义页面,如关于的页面
+     * 自定义页面,如关于的页面，在页面管理标签页配置
      */
-    @GetMapping(value = "/{pagename}")
+    @GetMapping(value = "manager/{pagename}")
     public String page(@PathVariable String pagename, HttpServletRequest request) {
         ContentVo contents = contentService.getContents(pagename);
         if (null == contents) {
