@@ -33,7 +33,7 @@ public class Swagger2Config {
     //构建 api文档的详细信息函数,注意这里的注解引用的是哪个
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder().title("springboot利用swagger构建api文档")
-				.description("简单优雅的restfun风格，http://blog.csdn.net/saytime")
+				.description("简单优雅的restfull风格，http://blog.csdn.net/saytime")
 				.termsOfServiceUrl("http://www.github.com/kongchen/swagger-maven-plugin")
 				.version("1.0")
 				.build();
