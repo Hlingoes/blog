@@ -1,40 +1,41 @@
 package com.my.blog.website.utils.backup;
 
 
-import com.my.blog.website.utils.backup.db.DataTable;
-import com.my.blog.website.utils.backup.db.Row;
-
-import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
+import javax.annotation.Resource;
+import javax.sql.DataSource;
+
+import org.springframework.stereotype.Component;
+
+import com.my.blog.website.utils.backup.db.DataTable;
+import com.my.blog.website.utils.backup.db.Row;
+
+@Component 
 public class Backup {
-	private Connection connection;
-	private TableCollection tables;
-	private boolean addEmptyTable;
+	
+	@Resource
+    private DataSource dataSource;    
+	
 	private static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyy-MM-dd");
 	private static final DateFormat DATE_TIME_FORMAT = new SimpleDateFormat("yyy-MM-dd hh:mm:ss");
 	private static final DateFormat TIME_FORMAT = new SimpleDateFormat("hh:mm:ss");
-
-	public Backup(Connection connection) {
-		this.addEmptyTable = true;
-		this.connection = connection;
-	}
 
 	public String execute() throws SQLException {
 
 		StringBuffer sbuf = new StringBuffer();
 
-		DatabaseMetaData metaData = connection.getMetaData();
+		DatabaseMetaData metaData = dataSource.getConnection().getMetaData();
 		String quote = metaData.getIdentifierQuoteString();
 
 		DataTable dataTable = null;
 
 		// get tables
-		tables = new TableCollection();
+		TableCollection tables = new TableCollection();
 		dataTable = DataTable.parse(metaData.getTables(null, null, null, null));
 		for (Row row : dataTable) {
 			tables.add(new Table(row.getString("TABLE_NAME")));
@@ -73,15 +74,13 @@ public class Backup {
 
 		tables.sort();
 
-		if (addEmptyTable) {
-			for (int i = tables.size() - 1; i >= 0; i--) {
-				sbuf.append("DROP TABLE IF EXISTS ");
-				sbuf.append(quote + tables.get(i).getName() + quote + ";\r\n");
-			}
+		for (int i = tables.size() - 1; i >= 0; i--) {
+			sbuf.append("DROP TABLE IF EXISTS ");
+			sbuf.append(quote + tables.get(i).getName() + quote + ";\r\n");
 		}
 
 		for (Table table : tables) {
-			dataTable = DataTable.execute(connection, "select * from " + quote + table.getName() + quote);
+			dataTable = DataTable.execute(dataSource.getConnection(), "select * from " + quote + table.getName() + quote);
 			if (dataTable.size() > 0) {
 				printInfo(sbuf, table.getName());
 

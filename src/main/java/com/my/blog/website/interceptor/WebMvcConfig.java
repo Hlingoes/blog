@@ -3,7 +3,7 @@ package com.my.blog.website.interceptor;
 
 import javax.annotation.Resource;
 
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -14,7 +14,7 @@ import com.my.blog.website.utils.TaleUtils;
  * 向mvc中添加自定义组件
  * Created by BlueT on 2017/3/9.
  */
-@Component
+@Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
     @Resource
     private BaseInterceptor baseInterceptor;

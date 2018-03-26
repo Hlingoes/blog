@@ -100,15 +100,15 @@
     var tale = new $.tale();
 
     $('#save-category-btn').click(function () {
-        var cname = $('#cform #cname').val();
-        var mid = $('#cform #mid').val();
+        var cname = $('#cname').val();
+        var mid = $('#mid').val();
         if (cname && cname != '') {
             tale.post({
                 url : '/administrator/category/save',
                 data: {mid: mid, cname: cname},
                 success: function (result) {
-                    $('#cform #mid').val('');
-                    $('#cform #cname').val('');
+                    $('#mid').val('');
+                    $('#cname').val('');
                     if (result && result.success) {
                         tale.alertOkAndReload('分类保存成功');
                     } else {
@@ -122,8 +122,8 @@
     $('.edit-category').click(function () {
         var mid = $(this).attr('mid');
         var cname = $(this).attr('cname');
-        $('#cform #mid').val(mid);
-        $('#cform #cname').val(cname);
+        $('#mid').val(mid);
+        $('#cname').val(cname);
     });
 
     $('.del-category').click(function () {
