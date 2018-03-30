@@ -52,7 +52,6 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-slf4j-impl</artifactId>
-            <version>2.5</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -69,12 +68,10 @@
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
-            <version>2.5</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
-            <version>2.5</version>
         </dependency>
         <!-- End: log4j2 -->
 
@@ -102,7 +99,6 @@
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.4</version>
         </dependency>
 
         <!--markdown处理-->
@@ -151,14 +147,187 @@
     </dependencies>
 
     <!-- 普通的maven打包方式 -->
-    <build>
+    <!-- <build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+	</build> -->
+	
+	<!-- 按照lib包分离的模式打包, https://my.oschina.net/xiaozhutefannao/blog/1624092 -->
+	<!-- <build>
+		<plugins> 
+			打包时跳过单元测试
+			<plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-surefire-plugin</artifactId>
+		        <configuration>
+		          <skip>true</skip>
+		        </configuration>
+	      	</plugin>
+	      	
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>target/lib</outputDirectory>
+                            <excludeTransitive>false</excludeTransitive>
+                            <stripVersion>false</stripVersion>
+                            <includeScope>runtime</includeScope>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <excludes>
+                        <exclude>**/*.properties</exclude>
+                        <exclude>**/*.xml</exclude>
+                        <exclude>**/*.yml</exclude>
+                        <exclude>static/**</exclude>
+                        <exclude>templates/**</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+			<plugin> 
+				<groupId>org.springframework.boot</groupId> 
+				<artifactId>spring-boot-maven-plugin</artifactId> 
+				<configuration>
+                    <layout>ZIP</layout>
+                    <includes>
+                        <include>
+                            <groupId>non-exists</groupId>
+                            <artifactId>non-exists</artifactId>
+                        </include>
+                    </includes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                        <configuration>
+                            <classifier>classes</classifier>
+                            <attach>false</attach>
+                        </configuration>
+                    </execution>
+                </executions>
+			</plugin> 
+			
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                        <configuration>
+                            <target>
+                                <property name="dist">target/distribution</property>
+                                <property name="dist-tmp">target/distribution/tmp</property>
+                                <property name="app-name">${project.artifactId}-${project.version}</property>
+                                <mkdir dir="${dist-tmp}" />
+                                <copy file="target/${app-name}.jar" tofile="${dist-tmp}/${app-name}.jar" />
+                                <unzip src="${dist-tmp}/${app-name}.jar" dest="${dist-tmp}" />
+                                <delete file="${dist-tmp}/${app-name}.jar" />
+
+                                <zip destfile="${dist}/${app-name}-pages.jar">
+                                    <zipfileset dir="${dist-tmp}/META-INF" prefix="META-INF" />
+                                    <zipfileset dir="target/classes/static" prefix="static" />
+                                    <zipfileset dir="target/classes/templates" prefix="templates" />
+                                </zip>
+
+                                <move file="target/${app-name}-classes.jar" todir="${dist}" />
+                                <move todir="${dist}/lib">
+                                    <fileset dir="target/lib" />
+                                </move>
+
+                                <delete dir="${dist-tmp}" />
+
+                                <copy todir="${dist}">
+                                    <fileset dir="target/classes">
+                                        <include name="**/*.properties" />
+                                        <include name="**/*.xml" />
+                                        <include name="**/*.yml" />
+                                    </fileset>
+                                </copy>
+                            </target>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+		</plugins>
+
+	</build> -->
+	<!-- 第二种分离打包方式, https://blog.csdn.net/dgzjkxha/article/details/52397289 -->
+	<build>
+		<plugins> 
+			<!-- 打包时跳过单元测试 -->
+			<plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-surefire-plugin</artifactId>
+		        <configuration>
+		          <skip>true</skip>
+		        </configuration>
+	      	</plugin>
+	      	
+	      	<plugin>  
+                <groupId>org.apache.maven.plugins</groupId>  
+                <artifactId>maven-jar-plugin</artifactId>  
+                <configuration>  
+                    <archive>  
+                    	<!-- 添加index则不从mainfest中读取classpath，而是从Index.list中读取 -->  
+						<!-- <index>true</index> -->  
+                        <manifest>  
+                            <mainClass>com.my.blog.website.CoreApplication</mainClass> 
+                            <!-- to create a class path to your dependecies you have to fill true in this field -->  
+                            <addClasspath>true</addClasspath>  
+                            <classpathPrefix>lib/</classpathPrefix>  
+                        </manifest>  
+                        <manifestEntries>  
+                            <Class-Path>./</Class-Path>  
+                        </manifestEntries>  
+                    </archive>  
+                    <excludes>  
+                        <exclude>config/**</exclude>  
+                    </excludes>  
+                </configuration>  
+            </plugin> 
+            
+            <plugin>  
+                <artifactId>maven-assembly-plugin</artifactId>  
+                <configuration>  
+                    <!-- not append assembly id in release file name -->  
+                    <appendAssemblyId>false</appendAssemblyId>  
+                    <descriptors>  
+                        <descriptor>src/main/package/package.xml</descriptor>  
+                    </descriptors>  
+                </configuration>  
+                <executions>  
+                    <execution>  
+                        <id>make-assembly</id>  
+                        <phase>package</phase>  
+                        <goals>  
+                            <goal>single</goal>  
+                        </goals>  
+                    </execution>  
+                </executions>  
+            </plugin>  
+	    </plugins>
 	</build>
-    <!-- 普通的maven打包方式 -->
 
 </project>

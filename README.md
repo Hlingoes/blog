@@ -8,5 +8,9 @@ fork from [blog](https://github.com/zhisheng17/blog) 该作者对项目做了详
 2018-3-25 修复因静态文件的路径地址和管理页面的路径地址一致，造成初始化登录时，静态文件被拦截，页面显示和跳转异常的bug<br>
 2018-3-26 加入对swagger的支持<br>
 2018-3-27 采用注解引入DataSource的方式，优化SQL数据备份功能
+2018-3-31 便于部署发布，分离springboot的打包方式
+## 参考文献
+[Springboot 打jar包分离lib，配置文件正确方式 ](https://my.oschina.net/xiaozhutefannao/blog/1624092)<br>
+[通过Maven构建打包Spring boot，并将config配置文件提取到jar文件外](https://blog.csdn.net/dgzjkxha/article/details/52397289)
 ## 感谢
 [zhisheng17](https://github.com/zhisheng17/blog), [ZHENFENG13](https://github.com/ZHENFENG13), [otale](https://github.com/otale)
