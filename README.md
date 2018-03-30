@@ -7,7 +7,7 @@ fork from [blog](https://github.com/zhisheng17/blog) 该作者对项目做了详
 2018-3-18 fork项目[blog](https://github.com/zhisheng17/blog)，升级到spring-boot2.0.0<br>
 2018-3-25 修复因静态文件的路径地址和管理页面的路径地址一致，造成初始化登录时，静态文件被拦截，页面显示和跳转异常的bug<br>
 2018-3-26 加入对swagger的支持<br>
-2018-3-27 采用注解引入DataSource的方式，优化SQL数据备份功能
+2018-3-27 采用注解引入DataSource的方式，优化SQL数据备份功能<br>
 2018-3-31 便于部署发布，分离springboot的打包方式
 ## 参考文献
 1. [Springboot 打jar包分离lib，配置文件正确方式 ](https://my.oschina.net/xiaozhutefannao/blog/1624092)<br>
