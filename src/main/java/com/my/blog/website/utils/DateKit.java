@@ -1,10 +1,14 @@
 package com.my.blog.website.utils;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Created by Administrator on 2017/3/10 010.
@@ -18,7 +22,7 @@ public class DateKit {
     public static final int INTERVAL_MINUTE = 6;
     public static final int INTERVAL_SECOND = 7;
     public static final Date tempDate = new Date((new Long("-2177481952000")).longValue());
-    private static List<SimpleDateFormat> dateFormats = new ArrayList(12) {
+    private static List<SimpleDateFormat> dateFormats = new ArrayList<SimpleDateFormat>(12) {
         private static final long serialVersionUID = 2249396579858199535L;
 
         {
@@ -38,15 +42,6 @@ public class DateKit {
     };
 
     public DateKit() {
-    }
-
-    public static boolean isToday(Date date) {
-        Date now = new Date();
-        boolean result = true;
-        result &= date.getYear() == now.getYear();
-        result &= date.getMonth() == now.getMonth();
-        result &= date.getDate() == now.getDate();
-        return result;
     }
 
     public static long DaysBetween(Date date1, Date date2) {
@@ -235,7 +230,7 @@ public class DateKit {
     public static List<Integer> getBeforeYearList(int before) {
         Calendar today = Calendar.getInstance();
         int theYear = today.get(1);
-        ArrayList list = new ArrayList();
+        ArrayList<Integer> list = new ArrayList<Integer>();
 
         for(int i = before; i >= 0; --i) {
             list.add(Integer.valueOf(theYear - i));
@@ -624,7 +619,7 @@ public class DateKit {
         if(null == input) {
             return null;
         } else {
-            Iterator var2 = dateFormats.iterator();
+            Iterator<SimpleDateFormat> var2 = dateFormats.iterator();
 
             while(var2.hasNext()) {
                 SimpleDateFormat format = (SimpleDateFormat)var2.next();

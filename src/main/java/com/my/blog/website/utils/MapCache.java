@@ -41,7 +41,8 @@ public class MapCache {
      * @param <T>
      * @return
      */
-    public <T> T get(String key) {
+    @SuppressWarnings("unchecked")
+	public <T> T get(String key) {
         CacheObject cacheObject = cachePool.get(key);
         if (null != cacheObject) {
             long cur = System.currentTimeMillis() / 1000;
