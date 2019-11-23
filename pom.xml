@@ -274,9 +274,9 @@
 
 	</build> -->
 	<!-- 第二种分离打包方式, https://blog.csdn.net/dgzjkxha/article/details/52397289 -->
-	<build>
+	<!-- <build>
 		<plugins> 
-			<!-- 打包时跳过单元测试 -->
+			打包时跳过单元测试
 			<plugin>
 		        <groupId>org.apache.maven.plugins</groupId>
 		        <artifactId>maven-surefire-plugin</artifactId>
@@ -290,11 +290,11 @@
                 <artifactId>maven-jar-plugin</artifactId>  
                 <configuration>  
                     <archive>  
-                    	<!-- 添加index则不从mainfest中读取classpath，而是从Index.list中读取 -->  
-						<!-- <index>true</index> -->  
+                    	添加index则不从mainfest中读取classpath，而是从Index.list中读取  
+						<index>true</index>  
                         <manifest>  
                             <mainClass>com.my.blog.website.CoreApplication</mainClass> 
-                            <!-- to create a class path to your dependecies you have to fill true in this field -->  
+                            to create a class path to your dependecies you have to fill true in this field  
                             <addClasspath>true</addClasspath>  
                             <classpathPrefix>lib/</classpathPrefix>  
                         </manifest>  
@@ -311,7 +311,7 @@
             <plugin>  
                 <artifactId>maven-assembly-plugin</artifactId>  
                 <configuration>  
-                    <!-- not append assembly id in release file name -->  
+                    not append assembly id in release file name  
                     <appendAssemblyId>false</appendAssemblyId>  
                     <descriptors>  
                         <descriptor>src/main/package/package.xml</descriptor>  
@@ -328,6 +328,52 @@
                 </executions>  
             </plugin>  
 	    </plugins>
-	</build>
+	</build> -->
+	<!-- 第三种打包方式 https://www.cnblogs.com/yuboon/p/11919329.html -->
+	<!-- maven 打包插件 -->
+	<build>
+		<plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <!-- MANIFEST.MF 中 Class-Path 加入前缀 -->
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <!-- jar包不包含唯一版本标识 -->
+                            <useUniqueVersions>false</useUniqueVersions>
+                            <!-- 指定入口类 -->
+                            <mainClass>com.my.blog.website.CoreApplication</mainClass>
+                        </manifest>
+                    </archive>
+                    <outputDirectory>${project.build.directory}</outputDirectory>
+                </configuration>
+            </plugin>
+
+            <!-- 拷贝依赖 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/lib</outputDirectory>
+                            <overWriteReleases>true</overWriteReleases>
+                            <overWriteSnapshots>true</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
 
 </project>
